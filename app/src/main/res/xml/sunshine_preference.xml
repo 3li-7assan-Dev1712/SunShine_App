@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:defaultValue="Mountain View, CA 94043"
+        android:inputType="text"
+        android:key="@string/pref_location_key"
+        android:singleLineTitle="true"
+        android:title="Location"  />
+    <ListPreference
+        android:defaultValue="metric"
+        android:key="@string/pref_units_key"
+        android:title="Temperature Unites"
+        android:entries="@array/preference_label"
+        android:entryValues="@array/preference_values"/>
+    <CheckBoxPreference
+        android:defaultValue="@bool/show_notifications_by_default"
+        android:key="@string/pref_enable_notifications_key"
+        android:summaryOff="@string/pref_enable_notifications_false"
+        android:summaryOn="@string/pref_enable_notifications_true"
+        android:title="@string/pref_enable_notifications_label" />
+</PreferenceScreen>

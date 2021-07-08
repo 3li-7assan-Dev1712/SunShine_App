@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:icon="@drawable/ic_baseline_share_24"
+        app:showAsAction="ifRoom"
+        android:title=""
+        android:id="@+id/share_id"
+        />
+
+    <item
+        android:id="@+id/settings_from_detail"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        />
+
+
+
+
+</menu>

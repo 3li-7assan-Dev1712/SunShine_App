@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <array name="days_weather">
+                <item>Today, May 17 - Clear - 17°C / 15°C</item>
+                <item>Tomorrow - Cloudy - 19°C / 15°C</item>
+                <item>Thursday - Rainy- 30°C / 11°C</item>
+                <item>Friday - Thunderstorms - 21°C / 9°C</item>
+                <item>Saturday - Thunderstorms - 16°C / 7°C</item>
+                <item>Sunday - Rainy - 16°C / 8°C</item>
+                <item>Monday - Partly Cloudy - 15°C / 10°C</item>
+                <item>Tue, May 24 - Meatballs - 16°C / 18°C</item>
+                <item>Wed, May 25 - Cloudy - 19°C / 15°C</item>
+                <item>Thu, May 26 - Stormy - 30°C / 11°C</item>
+                <item>Fri, May 27 - Hurricane - 21°C / 9°C</item>
+                <item>Mon, May 30 - Post Apocalypse - 15°C / 10°C</item>
+        </array>
+        <array name="preference_label">
+                <item>Metric</item>
+                <item>Imperial</item>
+        </array>
+        <string-array name="preference_values">
+                <item>@string/pref_units_metric</item>
+                <item>@string/pref_units_imperial</item>
+        </string-array>
+</resources>

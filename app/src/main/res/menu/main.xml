@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="@string/action_settings"
+        app:showAsAction="never"
+        android:id="@+id/go_to_settings"
+        />
+    <item
+        android:id="@+id/refresh"
+        android:title="@string/action_refresh"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"  />
+    <item
+        android:id="@+id/open_map"
+        android:title="@string/action_map"
+        app:showAsAction="never" />
+
+</menu>
