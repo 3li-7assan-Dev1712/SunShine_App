@@ -6,15 +6,12 @@ import android.util.Log;
 
 import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 public final class OpenWeatherJsonUtils {
 

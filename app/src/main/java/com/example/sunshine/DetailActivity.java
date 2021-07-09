@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.sunshine.data.WeatherContract;
 import com.example.sunshine.utilities.SunshineDateUtils;
 import com.example.sunshine.utilities.SunshineWeatherUtils;
+import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -197,7 +198,8 @@ content://com.example.sunshine/weather/1613260800000
         /* Use the weatherId to obtain the proper description */
         String description = SunshineWeatherUtils.getStringForWeatherCondition(this, weatherId);
         String realDescription= data.getString(INDEX_WEATHER_DESCRIPTION);
-        String icon= data.getString(INDEX_WEATHER_ICON);
+        String icon="https:" + data.getString(INDEX_WEATHER_ICON);
+        Picasso.get().load(icon).into(mWeatherIcon);
         /* Set the text */
         mDescriptionView.setText(realDescription);
 
@@ -258,7 +260,7 @@ content://com.example.sunshine/weather/1613260800000
         /* Set the text */
         mWindView.setText(windString);
 
-        mWeatherIcon.setImageResource(SunshineWeatherUtils.getSmallArtResourceIdForWeatherCondition(weatherId));
+//        mWeatherIcon.setImageResource(SunshineWeatherUtils.getSmallArtResourceIdForWeatherCondition(weatherId));
 //      COMPLETED (32) Display the pressure
         /************
          * Pressure *

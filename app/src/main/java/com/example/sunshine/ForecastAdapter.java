@@ -2,6 +2,9 @@ package com.example.sunshine;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sunshine.utilities.SunshineDateUtils;
 import com.example.sunshine.utilities.SunshineWeatherUtils;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Date;
 
 
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapterViewHolder> {
@@ -128,7 +137,39 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         double lowInCelsius = mCursor.getDouble(MainActivity.INDEX_WEATHER_MIN_TEMP);
 
         String realDescription = mCursor.getString(MainActivity.INDEX_WEATHER_DESCRIPTION);
-        String icon = mCursor.getString(MainActivity.INDEX_WEATHER_ICON);
+        String iconUrl = mCursor.getString(MainActivity.INDEX_WEATHER_ICON);
+
+        Picasso.get().load("https:" +iconUrl)
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        try{
+                            String root = Environment.getExternalStorageDirectory().toString();
+                            File myDir= new File(root, "/sunshine");
+                            if (!myDir.exists()){
+                                myDir.mkdirs();
+                            }
+                            String name = new Date().toString() + ".jpg";
+                            myDir = new File(myDir, name);
+                            FileOutputStream out = new FileOutputStream(myDir);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            out.flush();
+                            out.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
 //        String highAndLowTemperature =
 //                SunshineWeatherUtils.formatHighLows(mContext, highInCelsius, lowInCelsius);
 
