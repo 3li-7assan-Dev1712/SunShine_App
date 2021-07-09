@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.app.LoaderManager;
@@ -23,7 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
 import com.example.sunshine.sync.SunShineSyncUtils;
+import com.example.sunshine.utilities.NetworkUtils;
 import com.example.sunshine.utilities.NotificationUtils;
+
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler,
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -143,6 +147,13 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         getSupportLoaderManager().initLoader(ID_FORECAST_LOADER, null, this);
 
         SunShineSyncUtils.initialize(this);
+
+        URL Url = NetworkUtils.getOpenWeatherUrl("Sudan");
+        if (Url != null) {
+            Log.v(TAG, "myURL: " + Url.toString());
+            Toast.makeText(this, Url.toString(), Toast.LENGTH_SHORT).show();
+        }
+        
 
     }
 

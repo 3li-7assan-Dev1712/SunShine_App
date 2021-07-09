@@ -39,6 +39,8 @@ public final class NetworkUtils {
             "https://andfun-weather.udacity.com/staticweather";
 
     private static final String FORECAST_BASE_URL = STATIC_WEATHER_URL;
+    private static final String BASE_REAL_OPEN_WEATHER_URL =
+            "https://api.weatherapi.com/v1/forecast.json";
 
     /*
      * NOTE: These values only effect responses from OpenWeatherMap, NOT from the fake weather
@@ -46,7 +48,14 @@ public final class NetworkUtils {
      * a real API.If you want to connect your app to OpenWeatherMap's API, feel free to! However,
      * we are not going to show you how to do so in this course.
      */
-
+    private static final String aqi = "no";
+    private static final String alerts = "no";
+    private static final String aqi_key = "aqi";
+    private static final String alerts_key = "alerts";
+    private static final int days_number = 10;
+    private static final String days = "days";
+    private static final String key = "key";
+    private static final String api_key = "3bee1fa297304b5883052008210906";
     /* The format we want our API to return */
     private static final String format = "json";
     /* The units we want our API to return */
@@ -90,6 +99,23 @@ public final class NetworkUtils {
         } else {
             String locationQuery = SunshinePreferences.getPreferredWeatherLocation(context);
             return buildUrlWithLocationQuery(locationQuery);
+        }
+    }
+    public static URL getOpenWeatherUrl (String query){
+        Uri openWeatherUri = Uri.parse(BASE_REAL_OPEN_WEATHER_URL).buildUpon()
+                .appendQueryParameter(key, api_key)
+                .appendQueryParameter(QUERY_PARAM, query)
+                .appendQueryParameter(days, Integer.toString(days_number))
+                .appendQueryParameter(aqi_key, aqi)
+                .appendQueryParameter(alerts_key, alerts).build();
+
+        try {
+            URL openWeatherUrl = new URL(openWeatherUri.toString());
+            Log.v(TAG, "OPEN WEATHER URL: " + openWeatherUrl);
+            return openWeatherUrl;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
