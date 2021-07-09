@@ -49,7 +49,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             WeatherContract.WeatherEntry.COLUMN_PRESSURE,
             WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
             WeatherContract.WeatherEntry.COLUMN_DEGREES,
-            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID
+            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
+            WeatherContract.WeatherEntry.COLUMN_DESCRIPTION,
+            WeatherContract.WeatherEntry.COLUMN_ICON,
     };
     //  COMPLETED (19) Create constant int values representing each column name's position above
     /*
@@ -65,6 +67,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     public static final int INDEX_WEATHER_WIND_SPEED = 5;
     public static final int INDEX_WEATHER_DEGREES = 6;
     public static final int INDEX_WEATHER_CONDITION_ID = 7;
+    public static final int INDEX_WEATHER_DESCRIPTION = 8;
+    public static final int INDEX_WEATHER_ICON = 9;
 
     String FORECAST_SHARE_HASHTAG = " #SunShineApp";
     @Override
@@ -192,9 +196,10 @@ content://com.example.sunshine/weather/1613260800000
         int weatherId = data.getInt(INDEX_WEATHER_CONDITION_ID);
         /* Use the weatherId to obtain the proper description */
         String description = SunshineWeatherUtils.getStringForWeatherCondition(this, weatherId);
-
+        String realDescription= data.getString(INDEX_WEATHER_DESCRIPTION);
+        String icon= data.getString(INDEX_WEATHER_ICON);
         /* Set the text */
-        mDescriptionView.setText(description);
+        mDescriptionView.setText(realDescription);
 
 //      COMPLETED (28) Display the high temperature
         /**************************
