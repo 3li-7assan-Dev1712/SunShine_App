@@ -5,12 +5,14 @@ import android.content.Context;
 
 import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
+import java.util.concurrent.TimeUnit;
 
 public final class OpenWeatherJsonUtils {
 
@@ -161,6 +163,35 @@ public final class OpenWeatherJsonUtils {
             weatherContentValues[i] = weatherValues;
         }
 
+        return weatherContentValues;
+    }
+    public static ContentValues[] getRealWeatherData (String forecastResponse) throws JSONException {
+        long normalizedUtcStartDay = SunshineDateUtils.getNormalizedUtcDateForToday();
+        JSONObject jsonObject = new JSONObject(forecastResponse);
+        JSONObject forecastObj = jsonObject.getJSONObject(JsonConstants.forecast);
+        JSONArray forecastArray = forecastObj.getJSONArray(JsonConstants.forecast_day);
+        ContentValues[] weatherContentValues = new ContentValues[forecastArray.length()];
+        for (int i = 0; i < forecastArray.length(); i++){
+            JSONObject weatherObj = forecastArray.getJSONObject(i);
+            long dateInMillis = normalizedUtcStartDay + SunshineDateUtils.DAY_IN_MILLIS * i;
+            JSONObject dayObj = weatherObj.getJSONObject(JsonConstants.day);
+            double maxtemp_c = dayObj.getDouble(JsonConstants.maxtemp_c);
+            double mintemp_c = dayObj.getDouble(JsonConstants.mintemp_c);
+            double maxwind_kph = dayObj.getDouble(JsonConstants.maxwind_kph);
+            String humidity = dayObj.getString(JsonConstants.humidity);
+
+            ContentValues weatherValues = new ContentValues();
+            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DATE, dateInMillis);
+            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_HUMIDITY, humidity);
+            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE, 0);
+            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED, maxwind_kph);
+            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DEGREES, 0);
+            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP, maxtemp_c);
+            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP, mintemp_c);
+            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID, 0);
+
+            weatherContentValues[i] = weatherValues;
+        }
         return weatherContentValues;
     }
 }

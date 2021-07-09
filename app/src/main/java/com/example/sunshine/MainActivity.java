@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,6 +28,7 @@ import com.example.sunshine.sync.SunShineSyncUtils;
 import com.example.sunshine.utilities.NetworkUtils;
 import com.example.sunshine.utilities.NotificationUtils;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler,
@@ -148,13 +150,32 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
         SunShineSyncUtils.initialize(this);
 
-        URL Url = NetworkUtils.getOpenWeatherUrl("Sudan");
+        final URL Url = NetworkUtils.getOpenWeatherUrl("Sudan");
         if (Url != null) {
             Log.v(TAG, "myURL: " + Url.toString());
             Toast.makeText(this, Url.toString(), Toast.LENGTH_SHORT).show();
         }
-        
 
+        new AsyncTask<Void, Void, String>(){
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                String res = "";
+                try {
+                    res = NetworkUtils.getResponseFromHttpUrl(Url);
+                    Log.v(TAG, "res: " + res);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return res;
+            }
+
+            @Override
+            protected void onPostExecute(String res) {
+                Log.v(TAG, "res: " + res);
+                Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
+            }
+        }.execute();
     }
 
     /**

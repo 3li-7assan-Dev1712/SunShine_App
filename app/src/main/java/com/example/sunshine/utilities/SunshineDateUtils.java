@@ -221,7 +221,7 @@ public final class SunshineDateUtils {
              * If the date we're building the String for is today's date, the format
              * is "Today, June 24"
              */
-            String dayName = getDayName(context, localDate);
+            String dayName = getDayName(context, localDate); // can be today tomorrow or sat 17 june 2021
             String readableDate = getReadableDateString(context, localDate);
             if (daysFromEpochToProvidedDate - daysFromEpochToToday < 2) {
                 /*
@@ -264,7 +264,7 @@ public final class SunshineDateUtils {
     private static String getReadableDateString(Context context, long timeInMillis) {
         int flags = DateUtils.FORMAT_SHOW_DATE
                 | DateUtils.FORMAT_NO_YEAR
-                | DateUtils.FORMAT_SHOW_WEEKDAY;
+                | DateUtils.FORMAT_SHOW_WEEKDAY; // sat, 17 june.
 
         return DateUtils.formatDateTime(context, timeInMillis, flags);
     }

@@ -33,13 +33,18 @@ public class SunshineSyncTask {
              * longitude or off of a simple location as a String.
              */
             URL weatherRequestUrl = NetworkUtils.getUrl(context);
+            URL realWeatherRequestUrl = NetworkUtils.getOpenWeatherUrl("Sudan");
 
             /* Use the URL to retrieve the JSON */
             String jsonWeatherResponse = NetworkUtils.getResponseFromHttpUrl(weatherRequestUrl);
+            assert realWeatherRequestUrl != null;
+            String reaJsonWeatherResponse = NetworkUtils.getResponseFromHttpUrl(realWeatherRequestUrl);
 
             /* Parse the JSON into a list of weather values */
             ContentValues[] weatherValues = OpenWeatherJsonUtils
                     .getWeatherContentValuesFromJson(context, jsonWeatherResponse);
+            ContentValues[] realWeatherValues = OpenWeatherJsonUtils
+                    .getRealWeatherData(reaJsonWeatherResponse);
 
             /*
              * In cases where our JSON contained an error code, getWeatherContentValuesFromJson
@@ -47,7 +52,7 @@ public class SunshineSyncTask {
              * NullPointerExceptions being thrown. We also have no reason to insert fresh data if
              * there isn't any to insert.
              */
-            if (weatherValues != null && weatherValues.length != 0) {
+            if (realWeatherValues.length != 0) {
                 /* Get a handle on the ContentResolver to delete and insert data */
                 ContentResolver sunshineContentResolver = context.getContentResolver();
 
@@ -60,7 +65,7 @@ public class SunshineSyncTask {
                 /* Insert our new weather data into Sunshine's ContentProvider */
                 sunshineContentResolver.bulkInsert(
                         WeatherContract.WeatherEntry.CONTENT_URI,
-                        weatherValues);
+                        realWeatherValues);
 
 //              COMPLETED (13) Check if notifications are enabled
                 /*
