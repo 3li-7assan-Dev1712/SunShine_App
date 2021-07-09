@@ -31,6 +31,8 @@ public class WeatherContract {
         public static final String COLUMN_PRESSURE = "pressure";
         public static final String COLUMN_WIND_SPEED = "wind";
         public static final String COLUMN_DEGREES = "degrees";
+        public static final String COLUMN_DESCRIPTION = "description";
+        public static final String COLUMN_ICON = "icon";
 
         /*
         this method is responsible for getting the current time in milli seconds so we can compare

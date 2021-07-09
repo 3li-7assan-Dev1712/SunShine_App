@@ -127,6 +127,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         /* Read low temperature from the cursor (in degrees celsius) */
         double lowInCelsius = mCursor.getDouble(MainActivity.INDEX_WEATHER_MIN_TEMP);
 
+        String realDescription = mCursor.getString(MainActivity.INDEX_WEATHER_DESCRIPTION);
+        String icon = mCursor.getString(MainActivity.INDEX_WEATHER_ICON);
 //        String highAndLowTemperature =
 //                SunshineWeatherUtils.formatHighLows(mContext, highInCelsius, lowInCelsius);
 
@@ -134,7 +136,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
 
         forecastAdapterViewHolder.dateTextView.setText(dateString);
-        forecastAdapterViewHolder.descriptionTextView.setText(description);
+        forecastAdapterViewHolder.descriptionTextView.setText(realDescription);
         forecastAdapterViewHolder.iconImageView.setImageResource(SunshineWeatherUtils.getSmallArtResourceIdForWeatherCondition(weatherId));
         forecastAdapterViewHolder.hightWeatherTextView.setText(SunshineWeatherUtils.formatTemperature(mContext, highInCelsius));
         forecastAdapterViewHolder.lowWeatherTexaView.setText(SunshineWeatherUtils.formatTemperature(mContext, lowInCelsius));

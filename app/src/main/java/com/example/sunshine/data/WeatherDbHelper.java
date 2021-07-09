@@ -8,7 +8,7 @@ import com.example.sunshine.data.WeatherContract.WeatherEntry;
 public class WeatherDbHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "weather.db";
-    public static final int DATABASE_VERSION = 7; // update the database to delete the old data and replace them by up-to-date one.
+    public static final int DATABASE_VERSION = 8; // update the database to delete the old data and replace them by up-to-date one.
     public WeatherDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -44,6 +44,8 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                         WeatherEntry.COLUMN_WIND_SPEED + " REAL NOT NULL, "                    +
                         WeatherEntry.COLUMN_DEGREES    + " REAL NOT NULL, "                    +
 
+                        WeatherEntry.COLUMN_DESCRIPTION   + " REAL NOT NULL, "                 +
+                        WeatherEntry.COLUMN_ICON   + " REAL NOT NULL, "                        +
                         /*
                          * To ensure this table can only contain one weather entry per date, we declare
                          * the date column to be unique. We also specify "ON CONFLICT REPLACE". This tells

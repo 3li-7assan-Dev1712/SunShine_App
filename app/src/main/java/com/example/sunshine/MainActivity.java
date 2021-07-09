@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
             WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
+            WeatherContract.WeatherEntry.COLUMN_DESCRIPTION,
+            WeatherContract.WeatherEntry.COLUMN_ICON,
     };
 
     /*
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     public static final int INDEX_WEATHER_MAX_TEMP = 1;
     public static final int INDEX_WEATHER_MIN_TEMP = 2;
     public static final int INDEX_WEATHER_CONDITION_ID = 3;
+    public static final int INDEX_WEATHER_DESCRIPTION = 4;
+    public static final int INDEX_WEATHER_ICON= 5;
 
 
     /*
@@ -156,26 +160,6 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             Toast.makeText(this, Url.toString(), Toast.LENGTH_SHORT).show();
         }
 
-        new AsyncTask<Void, Void, String>(){
-
-            @Override
-            protected String doInBackground(Void... voids) {
-                String res = "";
-                try {
-                    res = NetworkUtils.getResponseFromHttpUrl(Url);
-                    Log.v(TAG, "res: " + res);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return res;
-            }
-
-            @Override
-            protected void onPostExecute(String res) {
-                Log.v(TAG, "res: " + res);
-                Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
-            }
-        }.execute();
     }
 
     /**

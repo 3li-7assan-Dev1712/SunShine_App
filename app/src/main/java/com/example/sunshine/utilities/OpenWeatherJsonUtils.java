@@ -187,7 +187,10 @@ public final class OpenWeatherJsonUtils {
             long debugDate = weatherObj.getLong(JsonConstants.date_epoch) * 1000;
             Log.v(TAG, "date from api: " + debugDate);
             Log.v(TAG, "date from device: " + dateInMillis);
-                    ContentValues weatherValues = new ContentValues();
+            JSONObject conditionObj = dayObj.getJSONObject(JsonConstants.condition);
+            String description = conditionObj.getString(JsonConstants.text);
+            String iconUrl = conditionObj.getString(JsonConstants.icon);
+            ContentValues weatherValues = new ContentValues();
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DATE, debugDate);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_HUMIDITY, humidity);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE, 0);
@@ -196,6 +199,8 @@ public final class OpenWeatherJsonUtils {
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP, maxtemp_c);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP, mintemp_c);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID, 0);
+            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DESCRIPTION, description);
+            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_ICON, iconUrl);
 
             weatherContentValues[i] = weatherValues;
         }
