@@ -2,6 +2,7 @@ package com.example.sunshine.utilities;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
@@ -12,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public final class OpenWeatherJsonUtils {
@@ -43,6 +45,7 @@ public final class OpenWeatherJsonUtils {
     private static final String OWM_WEATHER_ID = "id";
 
     private static final String OWM_MESSAGE_CODE = "cod";
+    private static final String TAG = OpenWeatherJsonUtils.class.toString();
 
     /**
      * This method parses JSON from a web response and returns an array of Strings
@@ -173,15 +176,19 @@ public final class OpenWeatherJsonUtils {
         ContentValues[] weatherContentValues = new ContentValues[forecastArray.length()];
         for (int i = 0; i < forecastArray.length(); i++){
             JSONObject weatherObj = forecastArray.getJSONObject(i);
+
             long dateInMillis = normalizedUtcStartDay + SunshineDateUtils.DAY_IN_MILLIS * i;
+
             JSONObject dayObj = weatherObj.getJSONObject(JsonConstants.day);
             double maxtemp_c = dayObj.getDouble(JsonConstants.maxtemp_c);
             double mintemp_c = dayObj.getDouble(JsonConstants.mintemp_c);
             double maxwind_kph = dayObj.getDouble(JsonConstants.maxwind_kph);
             String humidity = dayObj.getString(JsonConstants.humidity);
-
-            ContentValues weatherValues = new ContentValues();
-            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DATE, dateInMillis);
+            long debugDate = weatherObj.getLong(JsonConstants.date_epoch) * 1000;
+            Log.v(TAG, "date from api: " + debugDate);
+            Log.v(TAG, "date from device: " + dateInMillis);
+                    ContentValues weatherValues = new ContentValues();
+            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DATE, debugDate);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_HUMIDITY, humidity);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE, 0);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED, maxwind_kph);

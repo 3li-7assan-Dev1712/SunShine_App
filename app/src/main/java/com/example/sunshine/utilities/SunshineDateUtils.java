@@ -168,7 +168,7 @@ public final class SunshineDateUtils {
          * time.
          */
         long gmtOffset = timeZone.getOffset(normalizedUtcDate);
-        long localMidnightMillis = normalizedUtcDate - gmtOffset;
+        long localMidnightMillis = normalizedUtcDate + gmtOffset;
         return localMidnightMillis;
     }
 
