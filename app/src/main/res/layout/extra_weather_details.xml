@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/humidity_label"
-            app:layout_constraintBottom_toTopOf="@+id/pressure_label"
+            app:layout_constraintBottom_toTopOf="@+id/wind_label"
             app:layout_constraintLeft_toLeftOf="@+id/extra_details"
             app:layout_constraintTop_toTopOf="@+id/extra_details"
             app:layout_constraintVertical_bias="0.33"/>
@@ -64,26 +64,7 @@
             app:layout_constraintLeft_toLeftOf="@+id/horizontal_middle"
             tools:text="38%"/>
 
-        <!-- Pressure label -->
-        <TextView
-           style="@style/DetailLabel"
-            android:id="@+id/pressure_label"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/pressure_label"
-            app:layout_constraintBottom_toBottomOf="@+id/extra_details"
-            app:layout_constraintLeft_toLeftOf="@+id/extra_details"
-            app:layout_constraintTop_toTopOf="@+id/extra_details"/>
 
-        <!-- Pressure measurement -->
-        <TextView
-            style="@style/ExtraWeatherMeasurement"
-            android:id="@+id/pressure"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/pressure_label"
-            app:layout_constraintLeft_toLeftOf="@+id/horizontal_middle"
-            tools:text="995 hPa"/>
 
         <!-- Wind label -->
         <TextView
@@ -94,8 +75,8 @@
             android:text="@string/wind_label"
             app:layout_constraintBottom_toBottomOf="@+id/extra_details"
             app:layout_constraintLeft_toLeftOf="@+id/extra_details"
-            app:layout_constraintTop_toBottomOf="@+id/pressure_label"
-            app:layout_constraintVertical_bias="0.65999997"/>
+            app:layout_constraintTop_toBottomOf="@+id/humidity_label"
+            app:layout_constraintVertical_bias="0.5"/>
 
         <!-- Wind measurement -->
         <TextView

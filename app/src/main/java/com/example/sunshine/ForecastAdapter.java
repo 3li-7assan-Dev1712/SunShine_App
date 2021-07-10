@@ -138,38 +138,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
         String realDescription = mCursor.getString(MainActivity.INDEX_WEATHER_DESCRIPTION);
         String iconUrl = mCursor.getString(MainActivity.INDEX_WEATHER_ICON);
-
-        Picasso.get().load("https:" +iconUrl)
-                .into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        try{
-                            String root = Environment.getExternalStorageDirectory().toString();
-                            File myDir= new File(root, "/sunshine");
-                            if (!myDir.exists()){
-                                myDir.mkdirs();
-                            }
-                            String name = new Date().toString() + ".jpg";
-                            myDir = new File(myDir, name);
-                            FileOutputStream out = new FileOutputStream(myDir);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                            out.flush();
-                            out.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                });
+        Picasso.get().load("https:"+iconUrl).into(forecastAdapterViewHolder.iconImageView);
 //        String highAndLowTemperature =
 //                SunshineWeatherUtils.formatHighLows(mContext, highInCelsius, lowInCelsius);
 
@@ -178,7 +147,6 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
         forecastAdapterViewHolder.dateTextView.setText(dateString);
         forecastAdapterViewHolder.descriptionTextView.setText(realDescription);
-        forecastAdapterViewHolder.iconImageView.setImageResource(SunshineWeatherUtils.getSmallArtResourceIdForWeatherCondition(weatherId));
         forecastAdapterViewHolder.hightWeatherTextView.setText(SunshineWeatherUtils.formatTemperature(mContext, highInCelsius));
         forecastAdapterViewHolder.lowWeatherTexaView.setText(SunshineWeatherUtils.formatTemperature(mContext, lowInCelsius));
 

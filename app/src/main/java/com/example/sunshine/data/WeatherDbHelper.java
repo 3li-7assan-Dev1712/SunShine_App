@@ -8,7 +8,7 @@ import com.example.sunshine.data.WeatherContract.WeatherEntry;
 public class WeatherDbHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "weather.db";
-    public static final int DATABASE_VERSION = 9; // update the database to delete the old data and replace them by up-to-date one.
+    public static final int DATABASE_VERSION = 10; // update the database to delete the old data and replace them by up-to-date one.
     public WeatherDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -39,7 +39,6 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                         WeatherEntry.COLUMN_MAX_TEMP   + " REAL NOT NULL, "                    +
 
                         WeatherEntry.COLUMN_HUMIDITY   + " REAL NOT NULL, "                    +
-                        WeatherEntry.COLUMN_PRESSURE   + " REAL NOT NULL, "                    +
 
                         WeatherEntry.COLUMN_WIND_SPEED + " REAL NOT NULL, "                    +
                         WeatherEntry.COLUMN_DEGREES    + " REAL NOT NULL, "                    +

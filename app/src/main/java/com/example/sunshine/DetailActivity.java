@@ -37,17 +37,13 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private TextView mLowTemperatureView;
     private TextView mHumidityView;
     private TextView mWindView;
-    private TextView mPressureView;
     private ImageView mWeatherIcon;
-
-    private String mForecastSummary;
 
     public static final String[] WEATHER_DETAIL_PROJECTION = {
             WeatherContract.WeatherEntry.COLUMN_DATE,
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
             WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
-            WeatherContract.WeatherEntry.COLUMN_PRESSURE,
             WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
             WeatherContract.WeatherEntry.COLUMN_DEGREES,
             WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
@@ -64,12 +60,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     public static final int INDEX_WEATHER_MAX_TEMP = 1;
     public static final int INDEX_WEATHER_MIN_TEMP = 2;
     public static final int INDEX_WEATHER_HUMIDITY = 3;
-    public static final int INDEX_WEATHER_PRESSURE = 4;
-    public static final int INDEX_WEATHER_WIND_SPEED = 5;
-    public static final int INDEX_WEATHER_DEGREES = 6;
-    public static final int INDEX_WEATHER_CONDITION_ID = 7;
-    public static final int INDEX_WEATHER_DESCRIPTION = 8;
-    public static final int INDEX_WEATHER_ICON = 9;
+    public static final int INDEX_WEATHER_WIND_SPEED = 4;
+    public static final int INDEX_WEATHER_DEGREES = 5;
+    public static final int INDEX_WEATHER_CONDITION_ID = 6;
+    public static final int INDEX_WEATHER_DESCRIPTION = 7;
+    public static final int INDEX_WEATHER_ICON = 8;
 
     String FORECAST_SHARE_HASHTAG = " #SunShineApp";
     @Override
@@ -83,7 +78,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mLowTemperatureView = findViewById(R.id.low_temperature);
         mHumidityView = findViewById(R.id.humidity);
         mWindView = findViewById(R.id.wind_measurement);
-        mPressureView = findViewById(R.id.pressure);
         mWeatherIcon = findViewById(R.id.weather_icon);
 
         mUri = getIntent().getData();
@@ -266,7 +260,6 @@ content://com.example.sunshine/weather/1613260800000
          * Pressure *
          ************/
         /* Read pressure from the cursor */
-        float pressure = data.getFloat(INDEX_WEATHER_PRESSURE);
 
         /*
          * Format the pressure text using string resources. The reason we directly access
@@ -275,15 +268,11 @@ content://com.example.sunshine/weather/1613260800000
          * additional logic that needs to be considered in order to properly display the
          * pressure.
          */
-        String pressureString = getString(R.string.format_pressure, pressure);
 
         /* Set the text */
-        mPressureView.setText(pressureString);
 
 //      COMPLETED (33) Store a forecast summary in mForecastSummary
         /* Store the forecast summary String in our forecast summary field to share later */
-        mForecastSummary = String.format("%s - %s - %s/%s",
-                dateText, description, highString, lowString);
     }
 
 //  COMPLETED (34) Override onLoaderReset, but don't do anything in it yet

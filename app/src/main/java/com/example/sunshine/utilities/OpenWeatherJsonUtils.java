@@ -190,7 +190,6 @@ public final class OpenWeatherJsonUtils {
             ContentValues weatherValues = new ContentValues();
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DATE, debugDate);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_HUMIDITY, humidity);
-            weatherValues.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE, 0);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED, maxwind_kph);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DEGREES, 0);
             weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP, maxtemp_c);
