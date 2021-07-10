@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditTextPreference
-        android:defaultValue="Mountain View, CA 94043"
+        android:defaultValue="Khartoum, Sudan"
         android:inputType="text"
         android:key="location"
         android:singleLineTitle="true"

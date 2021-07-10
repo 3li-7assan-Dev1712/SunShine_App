@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -165,9 +166,13 @@ public final class OpenWeatherJsonUtils {
 
         return weatherContentValues;
     }
-    public static ContentValues[] getRealWeatherData (String forecastResponse) throws JSONException {
+    public static ContentValues[] getRealWeatherData (String forecastResponse, Context context) throws JSONException {
         long normalizedUtcStartDay = SunshineDateUtils.getNormalizedUtcDateForToday();
         JSONObject jsonObject = new JSONObject(forecastResponse);
+        JSONObject locationObj = jsonObject.getJSONObject(JsonConstants.location);
+        float lat = (float) locationObj.getDouble(SunshinePreferences.PREF_COORD_LAT);
+        float lon = (float) locationObj.getDouble(SunshinePreferences.PREF_COORD_LONG);
+        SunshinePreferences.setLocationCoordinates(context, lat, lon);
         JSONObject forecastObj = jsonObject.getJSONObject(JsonConstants.forecast);
         JSONArray forecastArray = forecastObj.getJSONArray(JsonConstants.forecast_day);
         ContentValues[] weatherContentValues = new ContentValues[forecastArray.length()];

@@ -18,4 +18,5 @@ public enum JsonConstants {;
     public static  final String humidity = "daily_chance_of_rain";
 
 
+    public static String location = "location";
 }

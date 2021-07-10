@@ -14,8 +14,8 @@ public class SunshinePreferences {
      * store the latitude and longitude. We will also use the latitude and longitude to create
      * queries for the weather.
      */
-    public static final String PREF_COORD_LAT = "coord_lat";
-    public static final String PREF_COORD_LONG = "coord_long";
+    public static final String PREF_COORD_LAT = "lat";
+    public static final String PREF_COORD_LONG = "lon";
 
     /**
      * Helper method to handle setting location details in Preferences (city name, latitude,
@@ -69,6 +69,13 @@ public class SunshinePreferences {
         return sp.getString(keyForLocation, defaultLocation);
     }
 
+    public static void setPreferredWeatherLocation(Context context, String location) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sp.edit();
+        String keyForLocation = context.getString(R.string.pref_location_key);
+        editor.putString(keyForLocation, location);
+    }
+
     /**
      * Returns true if the user has selected metric temperature display.
      *
@@ -99,10 +106,10 @@ public class SunshinePreferences {
      * @param context used to access SharedPreferences
      * @return an array containing the two coordinate values for the user's preferred location
      */
-    public static double[] getLocationCoordinates(Context context) {
+    public static float[] getLocationCoordinates(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
 
-        double[] preferredCoordinates = new double[2];
+        float[] erredCoordinates = new float[2];
 
         /*
          * This is a hack we have to resort to since you can't store doubles in SharedPreferences.
@@ -113,14 +120,20 @@ public class SunshinePreferences {
          * Double.longBitsToDouble does the opposite, converting a long (that represents a double)
          * into the double itself.
          */
-        preferredCoordinates[0] = Double
-                .longBitsToDouble(sp.getLong(PREF_COORD_LAT, Double.doubleToRawLongBits(0.0)));
-        preferredCoordinates[1] = Double
-                .longBitsToDouble(sp.getLong(PREF_COORD_LONG, Double.doubleToRawLongBits(0.0)));
-
-        return preferredCoordinates;
+        float lat = PreferenceManager.getDefaultSharedPreferences(context).getFloat(PREF_COORD_LAT, 0f);
+        float lon = PreferenceManager.getDefaultSharedPreferences(context).getFloat(PREF_COORD_LONG, 0f);
+        erredCoordinates[0] = lat;
+        erredCoordinates[1] = lon;
+        return erredCoordinates;
     }
 
+    public static void setLocationCoordinates(Context context, float lat, float lon){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor e = sp.edit();
+        e.putFloat(PREF_COORD_LAT, lat);
+        e.putFloat(PREF_COORD_LONG, lon);
+        e.apply();
+    }
     /**
      * Returns true if the latitude and longitude values are available. The latitude and
      * longitude will not be available until the lesson where the PlacePicker API is taught.

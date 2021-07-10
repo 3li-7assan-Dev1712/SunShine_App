@@ -92,9 +92,9 @@ public final class NetworkUtils {
      */
     public static URL getUrl(Context context) {
         if (SunshinePreferences.isLocationLatLonAvailable(context)) {
-            double[] preferredCoordinates = SunshinePreferences.getLocationCoordinates(context);
-            double latitude = preferredCoordinates[0];
-            double longitude = preferredCoordinates[1];
+            float[] preferredCoordinates = SunshinePreferences.getLocationCoordinates(context);
+            float latitude = preferredCoordinates[0];
+            float longitude = preferredCoordinates[1];
             return buildUrlWithLatitudeLongitude(latitude, longitude);
         } else {
             String locationQuery = SunshinePreferences.getPreferredWeatherLocation(context);
@@ -127,7 +127,7 @@ public final class NetworkUtils {
      * @param longitude The longitude of the location
      * @return The Url to use to query the weather server.
      */
-    private static URL buildUrlWithLatitudeLongitude(Double latitude, Double longitude) {
+    private static URL buildUrlWithLatitudeLongitude(Float latitude, Float longitude) {
         Uri weatherQueryUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                 .appendQueryParameter(LAT_PARAM, String.valueOf(latitude))
                 .appendQueryParameter(LON_PARAM, String.valueOf(longitude))

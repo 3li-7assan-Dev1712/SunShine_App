@@ -74,7 +74,7 @@ public class SettingsFragment  extends PreferenceFragmentCompat implements Share
         if (key.equals(getString(R.string.pref_location_key))) {
             // we've changed the location
             // Wipe out any potential PlacePicker latlng values so that we can use this text entry.
-            SunshinePreferences.resetLocationCoordinates(activity);
+            SunshinePreferences.setPreferredWeatherLocation(activity, sharedPreferences.getString(key, "Khartoum, Sudan"));
             SunShineSyncUtils.startImmediateSync(activity);
         } else if (key.equals(getString(R.string.pref_units_key))) {
             // units have changed. update lists of weather entries accordingly

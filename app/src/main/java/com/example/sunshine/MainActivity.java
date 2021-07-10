@@ -1,17 +1,14 @@
 package com.example.sunshine;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -19,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,9 +24,7 @@ import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
 import com.example.sunshine.sync.SunShineSyncUtils;
 import com.example.sunshine.utilities.NetworkUtils;
-import com.example.sunshine.utilities.NotificationUtils;
 
-import java.io.IOException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler,
@@ -83,8 +79,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setElevation(0f);
-
-
+        SunshinePreferences.setPreferredWeatherLocation(this, "Khartoum, Sudan");
         /*
          * Using findViewById, we get a reference to our RecyclerView from xml. This allows us to
          * do things like set the adapter of the RecyclerView and toggle the visibility.
@@ -173,10 +168,9 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
      * open the Common Intents page
      */
     private void openPreferredLocationInMap() {
-        double[] coords = SunshinePreferences.getLocationCoordinates(this);
-        String posLat = Double.toString(coords[0]);
-        String posLong = Double.toString(coords[1]);
-        Uri geoLocation = Uri.parse("geo:" + posLat + "," + posLong);
+        float[] coords = SunshinePreferences.getLocationCoordinates(this);
+
+        Uri geoLocation = Uri.parse("geo:" + coords[0] + "," + coords[1]);
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(geoLocation);
