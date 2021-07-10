@@ -32,18 +32,15 @@ public class SunshineSyncTask {
              * weather. It will decide whether to create a URL based off of the latitude and
              * longitude or off of a simple location as a String.
              */
-            URL weatherRequestUrl = NetworkUtils.getUrl(context);
+
             String location = SunshinePreferences.getPreferredWeatherLocation(context);
             URL realWeatherRequestUrl = NetworkUtils.getOpenWeatherUrl(location);
 
             /* Use the URL to retrieve the JSON */
-            String jsonWeatherResponse = NetworkUtils.getResponseFromHttpUrl(weatherRequestUrl);
             assert realWeatherRequestUrl != null;
             String reaJsonWeatherResponse = NetworkUtils.getResponseFromHttpUrl(realWeatherRequestUrl);
 
             /* Parse the JSON into a list of weather values */
-            ContentValues[] weatherValues = OpenWeatherJsonUtils
-                    .getWeatherContentValuesFromJson(context, jsonWeatherResponse);
             ContentValues[] realWeatherValues = OpenWeatherJsonUtils
                     .getRealWeatherData(reaJsonWeatherResponse, context);
 

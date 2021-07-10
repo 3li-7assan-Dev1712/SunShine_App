@@ -6,10 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -31,17 +28,12 @@ import java.io.IOException;
 public class NotificationUtils {
 
 
-    private static final String ALI_NOTIFICATION = "Notify";
 
     public static double high;
     public static double low;
     public static String description;
     public static String icon;
 
-    /*
-     * The columns of data that we are interested in displaying within our notification to let
-     * the user know there is new weather data available.
-     */
     public static final String[] WEATHER_NOTIFICATION_PROJECTION = {
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
@@ -50,31 +42,15 @@ public class NotificationUtils {
     };
 
 
-    /*
-     * We store the indices of the values in the array of Strings above to more quickly be able
-     * to access the data from our query. If the order of the Strings above changes, these
-     * indices must be adjusted to match the order of the Strings.
-     */
     public static final int INDEX_MAX_TEMP = 0;
     public static final int INDEX_MIN_TEMP = 1;
     public static final int INDEX_DESCRIPTION= 2;
     public static final int INDEX_ICON= 3;
 
-    /*
-     * This notification ID can be used to access our notification after we've displayed it. This
-     * can be handy when we need to cancel the notification, or perhaps update it. This number is
-     * arbitrary and can be set to whatever you like. 3004 is in no way significant.
-     */
-//  COMPLETED (1) Create a constant int value to identify the notification
     private static final int WEATHER_NOTIFICATION_ID = 3004;
     private static final String SUNSHINE_REMINDER = "sunshine-reminder";
 
     static Uri todaysWeatherUri= WeatherContract.WeatherEntry.CONTENT_URI;
-    /**
-     * Constructs and displays a notification for the newly updated weather for today.
-     *
-     * @param context Context used to query our ContentProvider and use various Utility methods
-     */
     public static void notifyUserOfNewWeather(final Context context) throws IOException {
         if (allowNotification(context))
         {
@@ -179,48 +155,6 @@ public class NotificationUtils {
 
     }
 
-    /**
-     * Constructs and returns the summary of a particular day's forecast using various utility
-     * methods and resources for formatting. This method is only used to create the text for the
-     * notification that appears when the weather is refreshed.
-     * <p>
-     * The String returned from this method will look something like this:
-     * <p>
-     * Forecast: Sunny - High: 14°C Low 7°C
-     *
-     * @param context   Used to access utility methods and resources
-     * @param high      High temperature (either celsius or fahrenheit depending on preferences)
-     * @param low       Low temperature (either celsius or fahrenheit depending on preferences)
-     * @return Summary of a particular day's forecast
-     */
-    private static String getNotificationText(Context context, String description, double high, double low) {
-
-        String notificationFormat = context.getString(R.string.format_notification);
-
-        /* Using String's format method, we create the forecast summary */
-        String notificationText = String.format(notificationFormat,
-                description,
-                SunshineWeatherUtils.formatTemperature(context, high),
-                SunshineWeatherUtils.formatTemperature(context, low));
-
-        return notificationText;
-    }
-    public static PendingIntent contentIntent(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-
-        return PendingIntent.getActivity(context,
-                WEATHER_NOTIFICATION_ID,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT // using the same PendingIntent and update the older one in reusing it:)
-        );
-    }
-
-    public Bitmap largeIcon(Context context){
-
-        Resources rec = context.getResources();
-        Bitmap largeIcon = BitmapFactory.decodeResource(rec, R.drawable.ic_local_drink_black_24px);
-        return largeIcon;
-    }
     public static boolean allowNotification(Context context){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean(context.getString(R.string.pref_enable_notifications_key), context.getResources().getBoolean(R.bool.show_notifications_by_default));

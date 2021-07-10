@@ -10,22 +10,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
 import com.example.sunshine.sync.SunShineSyncUtils;
-import com.example.sunshine.utilities.NetworkUtils;
-
-import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler,
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -40,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             WeatherContract.WeatherEntry.COLUMN_DATE,
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
-            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
             WeatherContract.WeatherEntry.COLUMN_DESCRIPTION,
             WeatherContract.WeatherEntry.COLUMN_ICON,
     };
@@ -53,9 +47,8 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     public static final int INDEX_WEATHER_DATE = 0;
     public static final int INDEX_WEATHER_MAX_TEMP = 1;
     public static final int INDEX_WEATHER_MIN_TEMP = 2;
-    public static final int INDEX_WEATHER_CONDITION_ID = 3;
-    public static final int INDEX_WEATHER_DESCRIPTION = 4;
-    public static final int INDEX_WEATHER_ICON= 5;
+    public static final int INDEX_WEATHER_DESCRIPTION = 3;
+    public static final int INDEX_WEATHER_ICON= 4;
 
 
     /*
@@ -95,20 +88,6 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
          */
         mLoadingIndicator = findViewById(R.id.progress_indicator);
 
-        /*
-         * A LinearLayoutManager is responsible for measuring and positioning item views within a
-         * RecyclerView into a linear list. This means that it can produce either a horizontal or
-         * vertical list depending on which parameter you pass in to the LinearLayoutManager
-         * constructor. In our case, we want a vertical list, so we pass in the constant from the
-         * LinearLayoutManager class for vertical lists, LinearLayoutManager.VERTICAL.
-         *
-         * There are other LayoutManagers available to display your data in uniform grids,
-         * staggered grids, and more! See the developer documentation for more details.
-         *
-         * The third parameter (shouldReverseLayout) should be true if you want to reverse your
-         * layout. Generally, this is only true with horizontal lists that need to support a
-         * right-to-left layout.
-         */
 
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -122,16 +101,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
          */
         mRecyclerView.setHasFixedSize(true);
 
-        /*
-         * The ForecastAdapter is responsible for linking our weather data with the Views that
-         * will end up displaying our weather data.
-         *
-         * Although passing in "this" twice may seem strange, it is actually a sign of separation
-         * of concerns, which is best programming practice. The ForecastAdapter requires an
-         * Android Context (which all Activities are) as well as an onClickHandler. Since our
-         * MainActivity implements the ForecastAdapter ForecastOnClickHandler interface, "this"
-         * is also an instance of that type of handler.
-         */
+
         mForecastAdapter = new ForecastAdapter(this, this);
 
         /* Setting the adapter attaches it to the RecyclerView in our layout. */
@@ -140,33 +110,11 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
         showLoading();
 
-        /*
-         * Ensures a loader is initialized and active. If the loader doesn't already exist, one is
-         * created and (if the activity/fragment is currently started) starts the loader. Otherwise
-         * the last created loader is re-used.
-         */
-        getSupportLoaderManager().initLoader(ID_FORECAST_LOADER, null, this);
-
+        LoaderManager.getInstance(this).initLoader(ID_FORECAST_LOADER, null, this);
         SunShineSyncUtils.initialize(this);
-
-        final URL Url = NetworkUtils.getOpenWeatherUrl("Sudan");
-        if (Url != null) {
-            Log.v(TAG, "myURL: " + Url.toString());
-            Toast.makeText(this, Url.toString(), Toast.LENGTH_SHORT).show();
-        }
 
     }
 
-    /**
-     * Uses the URI scheme for showing a location found on a map in conjunction with
-     * an implicit Intent. This super-handy Intent is detailed in the "Common Intents" page of
-     * Android's developer site:
-     *
-     * @see "http://developer.android.com/guide/components/intents-common.html#Maps"
-     * <p>
-     * Protip: Hold Command on Mac or Control on Windows and click that link to automagically
-     * open the Common Intents page
-     */
     private void openPreferredLocationInMap() {
         float[] coords = SunshinePreferences.getLocationCoordinates(this);
 
@@ -182,14 +130,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         }
     }
 
-    /**
-     * created. This Activity only uses one loader, so we don't necessarily NEED to check the
-     * loaderId, but this is certainly best practice.
-     *
-     * @param loaderId The loader ID for which we need to create a loader
-     * @param bundle   Any arguments supplied by the caller
-     * @return A new Loader instance that is ready to start loading.
-     */
+
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
 
@@ -220,17 +161,6 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         }
     }
 
-    /**
-     * Called when a Loader has finished loading its data.
-     *
-     * NOTE: There is one small bug in this code. If no data is present in the cursor do to an
-     * initial load being performed with no access to internet, the loading indicator will show
-     * indefinitely, until data is present from the ContentProvider. This will be fixed in a
-     * future version of the course.
-     *
-     * @param loader The Loader that has finished.
-     * @param data   The data generated by the Loader.
-     */
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
@@ -241,12 +171,6 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         if (data.getCount() != 0) showWeatherDataView();
     }
 
-    /**
-     * Called when a previously created loader is being reset, and thus making its data unavailable.
-     * The application should at this point remove any references it has to the Loader's data.
-     *
-     * @param loader The Loader that is being reset.
-     */
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         /*
@@ -256,12 +180,6 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         mForecastAdapter.swapCursor(null);
     }
 
-    /**
-     * This method is for responding to clicks from our list.
-     *
-     * @param date Normalized UTC time that represents the local date of the weather in GMT time.
-     * @see WeatherContract.WeatherEntry#COLUMN_DATE
-     */
     @Override
     public void onClick(long date) {
         Intent weatherDetailIntent = new Intent(MainActivity.this, DetailActivity.class);
@@ -270,13 +188,6 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         startActivity(weatherDetailIntent);
     }
 
-    /**
-     * This method will make the View for the weather data visible and hide the error message and
-     * loading indicator.
-     * <p>
-     * Since it is okay to redundantly set the visibility of a View, we don't need to check whether
-     * each view is currently visible or invisible.
-     */
     private void showWeatherDataView() {
         /* First, hide the loading indicator */
         mLoadingIndicator.setVisibility(View.INVISIBLE);
@@ -284,13 +195,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * This method will make the loading indicator visible and hide the weather View and error
-     * message.
-     * <p>
-     * Since it is okay to redundantly set the visibility of a View, we don't need to check whether
-     * each view is currently visible or invisible.
-     */
+
     private void showLoading() {
         /* Then, hide the weather data */
         mRecyclerView.setVisibility(View.INVISIBLE);
@@ -341,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         }
         else if(id == R.id.refresh){
             mForecastAdapter.swapCursor(null);
-            getSupportLoaderManager().restartLoader(ID_FORECAST_LOADER, null, this);
+            LoaderManager.getInstance(this).restartLoader(ID_FORECAST_LOADER, null, this);
         }
 
         return super.onOptionsItemSelected(item);

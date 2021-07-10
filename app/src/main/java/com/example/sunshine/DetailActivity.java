@@ -1,14 +1,5 @@
 package com.example.sunshine;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
-import androidx.core.app.ShareCompat;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -19,7 +10,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 
 import com.example.sunshine.data.WeatherContract;
 import com.example.sunshine.utilities.SunshineDateUtils;
@@ -46,25 +44,18 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
             WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
             WeatherContract.WeatherEntry.COLUMN_DEGREES,
-            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
             WeatherContract.WeatherEntry.COLUMN_DESCRIPTION,
             WeatherContract.WeatherEntry.COLUMN_ICON,
     };
-    //  COMPLETED (19) Create constant int values representing each column name's position above
-    /*
-     * We store the indices of the values in the array of Strings above to more quickly be able
-     * to access the data from our query. If the order of the Strings above changes, these
-     * indices must be adjusted to match the order of the Strings.
-     */
+
     public static final int INDEX_WEATHER_DATE = 0;
     public static final int INDEX_WEATHER_MAX_TEMP = 1;
     public static final int INDEX_WEATHER_MIN_TEMP = 2;
     public static final int INDEX_WEATHER_HUMIDITY = 3;
     public static final int INDEX_WEATHER_WIND_SPEED = 4;
     public static final int INDEX_WEATHER_DEGREES = 5;
-    public static final int INDEX_WEATHER_CONDITION_ID = 6;
-    public static final int INDEX_WEATHER_DESCRIPTION = 7;
-    public static final int INDEX_WEATHER_ICON = 8;
+    public static final int INDEX_WEATHER_DESCRIPTION = 6;
+    public static final int INDEX_WEATHER_ICON = 7;
 
     String FORECAST_SHARE_HASHTAG = " #SunShineApp";
     @Override
@@ -83,7 +74,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mUri = getIntent().getData();
 //      COMPLETED (17) Throw a NullPointerException if that URI is null
         if (mUri == null) throw new NullPointerException("URI for DetailActivity cannot be null");
-        getSupportLoaderManager().initLoader(ID_FOR_LOADER, null, this);
+        LoaderManager.getInstance(this).initLoader(ID_FOR_LOADER, null, this);
     }
 
 
@@ -141,17 +132,7 @@ content://com.example.sunshine/weather/1613260800000
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-//      COMPLETED (25) Check before doing anything that the Cursor has valid data
-        /*
-         * Before we bind the data to the UI that will display that data, we need to check the
-         * cursor to make sure we have the results that we are expecting. In order to do that, we
-         * check to make sure the cursor is not null and then we call moveToFirst on the cursor.
-         * Although it may not seem obvious at first, moveToFirst will return true if it contains
-         * a valid first row of data.
-         *
-         * If we have valid data, we want to continue on to bind that data to the UI. If we don't
-         * have any data to bind, we just return from this method.
-         */
+
         boolean cursorHasValidData = false;
         if (data != null && data.moveToFirst()) {
             /* We have valid data, continue on to bind the data to the UI */
@@ -163,62 +144,25 @@ content://com.example.sunshine/weather/1613260800000
             return;
         }
 
-//      COMPLETED (26) Display a readable data string
-        /****************
-         * Weather Date *
-         ****************/
-        /*
-         * Read the date from the cursor. It is important to note that the date from the cursor
-         * is the same date from the weather SQL table. The date that is stored is a GMT
-         * representation at midnight of the date when the weather information was loaded for.
-         *
-         * When displaying this date, one must add the GMT offset (in milliseconds) to acquire
-         * the date representation for the local date in local time.
-         * SunshineDateUtils#getFriendlyDateString takes care of this for us.
-         */
-
 
         long localDateMidnightGmt = data.getLong(INDEX_WEATHER_DATE);
         String dateText = SunshineDateUtils.getFriendlyDateString(this, localDateMidnightGmt, true);
 
         mDateView.setText(dateText);
-
-//      COMPLETED (27) Display the weather description (using SunshineWeatherUtils)
-        /***********************
-         * Weather Description *
-         ***********************/
-        /* Read weather condition ID from the cursor (ID provided by Open Weather Map) */
-        int weatherId = data.getInt(INDEX_WEATHER_CONDITION_ID);
-        /* Use the weatherId to obtain the proper description */
-        String description = SunshineWeatherUtils.getStringForWeatherCondition(this, weatherId);
         String realDescription= data.getString(INDEX_WEATHER_DESCRIPTION);
         String icon="https:" + data.getString(INDEX_WEATHER_ICON);
         Picasso.get().load(icon).into(mWeatherIcon);
         /* Set the text */
         mDescriptionView.setText(realDescription);
 
-//      COMPLETED (28) Display the high temperature
-        /**************************
-         * High (max) temperature *
-         **************************/
-        /* Read high temperature from the cursor (in degrees celsius) */
         double highInCelsius = data.getDouble(INDEX_WEATHER_MAX_TEMP);
         Log.i("DetailActivity.class", "High Temperature in celsius: " + highInCelsius);
-        /*
-         * If the user's preference for weather is fahrenheit, formatTemperature will convert
-         * the temperature. This method will also append either °C or °F to the temperature
-         * String.
-         */
         String highString = SunshineWeatherUtils.formatTemperature(this, highInCelsius);
 
 
         /* Set the text */
         mHighTemperatureView.setText(highString);
 
-//      COMPLETED (29) Display the low temperature
-        /*************************
-         * Low (min) temperature *
-         *************************/
         /* Read low temperature from the cursor (in degrees celsius) */
         double lowInCelsius = data.getDouble(INDEX_WEATHER_MIN_TEMP);
         /*
@@ -230,11 +174,6 @@ content://com.example.sunshine/weather/1613260800000
 
         /* Set the text */
         mLowTemperatureView.setText(lowString);
-
-//      COMPLETED (30) Display the humidity
-        /************
-         * Humidity *
-         ************/
         /* Read humidity from the cursor */
         float humidity = data.getFloat(INDEX_WEATHER_HUMIDITY);
         String humidityString = getString(R.string.format_humidity, humidity);
@@ -242,10 +181,6 @@ content://com.example.sunshine/weather/1613260800000
         /* Set the text */
         mHumidityView.setText(humidityString);
 
-//      COMPLETED (31) Display the wind speed and direction
-        /****************************
-         * Wind speed and direction *
-         ****************************/
         /* Read wind speed (in MPH) and direction (in compass degrees) from the cursor  */
         float windSpeed = data.getFloat(INDEX_WEATHER_WIND_SPEED);
         float windDirection = data.getFloat(INDEX_WEATHER_DEGREES);
@@ -254,35 +189,7 @@ content://com.example.sunshine/weather/1613260800000
         /* Set the text */
         mWindView.setText(windString);
 
-//        mWeatherIcon.setImageResource(SunshineWeatherUtils.getSmallArtResourceIdForWeatherCondition(weatherId));
-//      COMPLETED (32) Display the pressure
-        /************
-         * Pressure *
-         ************/
-        /* Read pressure from the cursor */
-
-        /*
-         * Format the pressure text using string resources. The reason we directly access
-         * resources using getString rather than using a method from SunshineWeatherUtils as
-         * we have for other data displayed in this Activity is because there is no
-         * additional logic that needs to be considered in order to properly display the
-         * pressure.
-         */
-
-        /* Set the text */
-
-//      COMPLETED (33) Store a forecast summary in mForecastSummary
-        /* Store the forecast summary String in our forecast summary field to share later */
     }
-
-//  COMPLETED (34) Override onLoaderReset, but don't do anything in it yet
-    /**
-     * Called when a previously created loader is being reset, thus making its data unavailable.
-     * The application should at this point remove any references it has to the Loader's data.
-     * Since we don't store any of this cursor's data, there are no references we need to remove.
-     *
-     * @param loader The Loader that is being reset.
-     */
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
