@@ -14,13 +14,15 @@
         android:theme="@style/AppTheme.Forecast">
         <activity android:name=".SettingsActivity" />
         <activity android:name=".DetailActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.Forecast">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
         <activity android:name=".MainActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Forecast">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
