@@ -22,8 +22,8 @@ import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
 import com.example.sunshine.sync.SunShineSyncUtils;
 
-public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler,
-        LoaderManager.LoaderCallbacks<Cursor> {
+public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler
+        /*LoaderManager.LoaderCallbacks<Cursor>*/ {
 
     private final String TAG = MainActivity.class.getSimpleName();
 
@@ -60,11 +60,11 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
      */
     private static final int ID_FORECAST_LOADER = 44;
 
-    private ForecastAdapter mForecastAdapter;
-    private RecyclerView mRecyclerView;
-    private int mPosition = RecyclerView.NO_POSITION;
-
-    private ProgressBar mLoadingIndicator;
+//    private ForecastAdapter mForecastAdapter;
+//    private RecyclerView mRecyclerView;
+//    private int mPosition = RecyclerView.NO_POSITION;
+//
+//    private ProgressBar mLoadingIndicator;
 
 
     @Override
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
          * Using findViewById, we get a reference to our RecyclerView from xml. This allows us to
          * do things like set the adapter of the RecyclerView and toggle the visibility.
          */
-        mRecyclerView = findViewById(R.id.recyclerview_forecast);
+//        mRecyclerView = findViewById(R.id.recyclerview_forecast);
 
         /*
          * The ProgressBar that will indicate to the user that we are loading data. It will be
@@ -86,31 +86,31 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
          * Please note: This so called "ProgressBar" isn't a bar by default. It is more of a
          * circle. We didn't make the rules (or the names of Views), we just follow them.
          */
-        mLoadingIndicator = findViewById(R.id.progress_indicator);
+//        mLoadingIndicator = findViewById(R.id.progress_indicator);
 
 
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+//        LinearLayoutManager layoutManager =
+//                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
         /* setLayoutManager associates the LayoutManager we created above with our RecyclerView */
-        mRecyclerView.setLayoutManager(layoutManager);
+//        mRecyclerView.setLayoutManager(layoutManager);
 
         /*
          * Use this setting to improve performance if you know that changes in content do not
          * change the child layout size in the RecyclerView
          */
-        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setHasFixedSize(true);
 
 
-        mForecastAdapter = new ForecastAdapter(this, this);
+//        mForecastAdapter = new ForecastAdapter(this, this);
 
         /* Setting the adapter attaches it to the RecyclerView in our layout. */
-        mRecyclerView.setAdapter(mForecastAdapter);
+//        mRecyclerView.setAdapter(mForecastAdapter);
 
 
-        showLoading();
+//        showLoading();
 
-        LoaderManager.getInstance(this).initLoader(ID_FORECAST_LOADER, null, this);
+//        LoaderManager.getInstance(this).initLoader(ID_FORECAST_LOADER, null, this);
         SunShineSyncUtils.initialize(this);
 
     }
@@ -131,54 +131,54 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     }
 
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
-
-
-        switch (loaderId) {
-
-            case ID_FORECAST_LOADER:
-                /* URI for all rows of weather data in our weather table */
-                Uri forecastQueryUri = WeatherContract.WeatherEntry.CONTENT_URI;
-                /* Sort order: Ascending by date */
-                String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
-                /*
-                 * A SELECTION in SQL declares which rows you'd like to return. In our case, we
-                 * want all weather data from today onwards that is stored in our weather table.
-                 * We created a handy method to do that in our WeatherEntry class.
-                 */
-                String selection = WeatherContract.WeatherEntry.getSqlSelectForTodayOnwards();
-
-                return new CursorLoader(this,
-                        forecastQueryUri,
-                        MAIN_FORECAST_PROJECTION,
-                        selection,
-                        null,
-                        sortOrder);
-
-            default:
-                throw new RuntimeException("Loader Not Implemented: " + loaderId);
-        }
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-
-        mForecastAdapter.swapCursor(data);
-        if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
-        mRecyclerView.smoothScrollToPosition(mPosition);
-        if (data.getCount() != 0) showWeatherDataView();
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        /*
-         * Since this Loader's data is now invalid, we need to clear the Adapter that is
-         * displaying the data.
-         */
-        mForecastAdapter.swapCursor(null);
-    }
+//    @Override
+//    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
+//
+//
+//        switch (loaderId) {
+//
+//            case ID_FORECAST_LOADER:
+//                /* URI for all rows of weather data in our weather table */
+//                Uri forecastQueryUri = WeatherContract.WeatherEntry.CONTENT_URI;
+//                /* Sort order: Ascending by date */
+//                String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
+//                /*
+//                 * A SELECTION in SQL declares which rows you'd like to return. In our case, we
+//                 * want all weather data from today onwards that is stored in our weather table.
+//                 * We created a handy method to do that in our WeatherEntry class.
+//                 */
+//                String selection = WeatherContract.WeatherEntry.getSqlSelectForTodayOnwards();
+//
+//                return new CursorLoader(this,
+//                        forecastQueryUri,
+//                        MAIN_FORECAST_PROJECTION,
+//                        selection,
+//                        null,
+//                        sortOrder);
+//
+//            default:
+//                throw new RuntimeException("Loader Not Implemented: " + loaderId);
+//        }
+//    }
+//
+//    @Override
+//    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+//
+//
+//        mForecastAdapter.swapCursor(data);
+//        if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
+//        mRecyclerView.smoothScrollToPosition(mPosition);
+//        if (data.getCount() != 0) showWeatherDataView();
+//    }
+//
+//    @Override
+//    public void onLoaderReset(Loader<Cursor> loader) {
+//        /*
+//         * Since this Loader's data is now invalid, we need to clear the Adapter that is
+//         * displaying the data.
+//         */
+//        mForecastAdapter.swapCursor(null);
+//    }
 
     @Override
     public void onClick(long date) {
@@ -188,20 +188,20 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         startActivity(weatherDetailIntent);
     }
 
-    private void showWeatherDataView() {
-        /* First, hide the loading indicator */
-        mLoadingIndicator.setVisibility(View.INVISIBLE);
-        /* Finally, make sure the weather data is visible */
-        mRecyclerView.setVisibility(View.VISIBLE);
-    }
-
-
-    private void showLoading() {
-        /* Then, hide the weather data */
-        mRecyclerView.setVisibility(View.INVISIBLE);
-        /* Finally, show the loading indicator */
-        mLoadingIndicator.setVisibility(View.VISIBLE);
-    }
+//    private void showWeatherDataView() {
+//        /* First, hide the loading indicator */
+//        mLoadingIndicator.setVisibility(View.INVISIBLE);
+//        /* Finally, make sure the weather data is visible */
+//        mRecyclerView.setVisibility(View.VISIBLE);
+//    }
+//
+//
+//    private void showLoading() {
+//        /* Then, hide the weather data */
+//        mRecyclerView.setVisibility(View.INVISIBLE);
+//        /* Finally, show the loading indicator */
+//        mLoadingIndicator.setVisibility(View.VISIBLE);
+//    }
 
     /**
      * This is where we inflate and set up the menu for this Activity.
@@ -244,10 +244,10 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             openPreferredLocationInMap();
             return true;
         }
-        else if(id == R.id.refresh){
-            mForecastAdapter.swapCursor(null);
-            LoaderManager.getInstance(this).restartLoader(ID_FORECAST_LOADER, null, this);
-        }
+//        else if(id == R.id.refresh){
+//            mForecastAdapter.swapCursor(null);
+//            LoaderManager.getInstance(this).restartLoader(ID_FORECAST_LOADER, null, this);
+//        }
 
         return super.onOptionsItemSelected(item);
     }
