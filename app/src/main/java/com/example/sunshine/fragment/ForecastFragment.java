@@ -93,6 +93,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         dialog.setTitle("Internet/Input Error");
         dialog.setMessage("Please make sure you've input the city name correct and check your internet connection.");
         dialog.show();
+        mLoadingIndicator.setVisibility(View.INVISIBLE);
     }
 
     private void showWeatherDataView() {
