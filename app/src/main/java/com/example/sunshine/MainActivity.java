@@ -7,16 +7,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
+import com.example.sunshine.fragment.DetailWeatherFragment;
 import com.example.sunshine.sync.SunShineSyncUtils;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler {
 
     private final String TAG = MainActivity.class.getSimpleName();
+    private boolean mTowPane = false;
 
     /*
      * The columns of data that we are interested in displaying within our MainActivity's list of
@@ -48,10 +54,23 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setElevation(0f);
+//        Objects.requireNonNull(getSupportActionBar()).setElevation(0f);
         SunshinePreferences.setPreferredWeatherLocation(this, "Khartoum, Sudan");
-        SunShineSyncUtils.initialize(this);
-
+//        SunShineSyncUtils.initialize(this);
+        View view = findViewById(R.id.separater_view);
+        if (view != null) {
+            mTowPane = true;
+            Log.d(TAG, "mTwoPane: " + mTowPane);
+        }
+        Log.d(TAG, "mTwoPane: " + mTowPane);
+        if (mTowPane) {
+            DetailWeatherFragment weatherFragment = new DetailWeatherFragment();
+            long todayDateInMillis = SunshinePreferences.getTodayDateInMillis(this);
+            Uri todayUri = WeatherContract.WeatherEntry.buildWeatherUriWithDate(todayDateInMillis);
+            weatherFragment.setmUri(todayUri);
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().add(R.id.detail_fragment_containter, weatherFragment).commit();
+        }
     }
 
     private void openPreferredLocationInMap() {
@@ -72,10 +91,18 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
     @Override
     public void onClick(long date) {
-        Intent weatherDetailIntent = new Intent(MainActivity.this, DetailActivity.class);
-        Uri uriForDateClicked = WeatherContract.WeatherEntry.buildWeatherUriWithDate(date);
-        weatherDetailIntent.setData(uriForDateClicked);
-        startActivity(weatherDetailIntent);
+        if (mTowPane){
+            DetailWeatherFragment weatherFragment = new DetailWeatherFragment();
+            Uri todayUri = WeatherContract.WeatherEntry.buildWeatherUriWithDate(date);
+            weatherFragment.setmUri(todayUri);
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.detail_fragment_containter, weatherFragment).commit();
+        }else {
+            Intent weatherDetailIntent = new Intent(MainActivity.this, DetailActivity.class);
+            Uri uriForDateClicked = WeatherContract.WeatherEntry.buildWeatherUriWithDate(date);
+            weatherDetailIntent.setData(uriForDateClicked);
+            startActivity(weatherDetailIntent);
+        }
     }
 
     /**

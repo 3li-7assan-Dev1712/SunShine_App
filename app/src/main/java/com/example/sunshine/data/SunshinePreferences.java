@@ -132,4 +132,16 @@ public class SunshinePreferences {
         editor.putLong(lastNotificationKey, timeOfNotification);
         editor.apply();
     }
+
+    public static void saveTodayDateInMillis(Context context, long dateInMillis){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor e = sp.edit();
+        e.putLong(context.getString(R.string.key_date_millis), dateInMillis);
+        e.apply();
+    }
+    public static long getTodayDateInMillis(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getLong(context.getString(R.string.key_date_millis), 0);
+    }
+
 }

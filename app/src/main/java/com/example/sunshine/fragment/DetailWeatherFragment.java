@@ -59,6 +59,9 @@ public class DetailWeatherFragment extends Fragment implements LoaderManager.Loa
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View detailFragmentView = inflater.inflate(R.layout.detail_weather_fragment, container, false);
+        if (savedInstanceState != null){
+            mUri = savedInstanceState.getParcelable("uri");
+        }
         mDateView = detailFragmentView.findViewById(R.id.date);
         mDescriptionView = detailFragmentView.findViewById(R.id.weather_description);
         mHighTemperatureView = detailFragmentView.findViewById(R.id.high_temperature);
@@ -69,6 +72,10 @@ public class DetailWeatherFragment extends Fragment implements LoaderManager.Loa
         if (mUri == null) throw new NullPointerException("URI for DetailActivity cannot be null");
         LoaderManager.getInstance(this).initLoader(ID_FOR_LOADER, null, this);
         return detailFragmentView;
+    }
+
+    public DetailWeatherFragment() {
+        /*empty constructor for creating the fragment*/
     }
 
     @NonNull
@@ -140,6 +147,12 @@ public class DetailWeatherFragment extends Fragment implements LoaderManager.Loa
         /* Set the text */
         mWindView.setText(windString);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelable("uri", mUri);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

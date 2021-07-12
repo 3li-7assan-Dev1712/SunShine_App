@@ -17,6 +17,7 @@ public final class OpenWeatherJsonUtils {
 
     public static ContentValues[] getRealWeatherData (String forecastResponse, Context context) throws JSONException {
         long normalizedUtcStartDay = SunshineDateUtils.getNormalizedUtcDateForToday();
+        SunshinePreferences.saveTodayDateInMillis(context, normalizedUtcStartDay);
         JSONObject jsonObject = new JSONObject(forecastResponse);
         JSONObject locationObj = jsonObject.getJSONObject(JsonConstants.location);
         float lat = (float) locationObj.getDouble(SunshinePreferences.PREF_COORD_LAT);

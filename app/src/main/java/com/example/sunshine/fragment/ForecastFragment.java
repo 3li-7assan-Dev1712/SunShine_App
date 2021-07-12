@@ -22,6 +22,7 @@ import com.example.sunshine.ForecastAdapter;
 import com.example.sunshine.MainActivity;
 import com.example.sunshine.R;
 import com.example.sunshine.data.WeatherContract;
+import com.example.sunshine.sync.SunShineSyncUtils;
 
 public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -34,6 +35,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        SunShineSyncUtils.initialize(getContext());
         View forecastView = inflater.inflate(R.layout.forecast_fragment, container, false);
         mForecastRecycler= forecastView.findViewById(R.id.recyclerview_forecast);
         mForecastRecycler.setHasFixedSize(true);

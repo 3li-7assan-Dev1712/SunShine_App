@@ -72,7 +72,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mWeatherIcon = findViewById(R.id.weather_icon);
 
         mUri = getIntent().getData();
-//      COMPLETED (17) Throw a NullPointerException if that URI is null
         if (mUri == null) throw new NullPointerException("URI for DetailActivity cannot be null");
         LoaderManager.getInstance(this).initLoader(ID_FOR_LOADER, null, this);
     }

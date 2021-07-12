@@ -207,5 +207,6 @@
     <string name="do_it">do it yourself</string>
     <string name="main_notification_channel_name">notification_channel</string>
     <string name="light_rain">Light Rain</string>
+    <string name="key_date_millis">dateInMillis</string>
 
 </resources>
