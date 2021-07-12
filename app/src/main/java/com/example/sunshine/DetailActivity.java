@@ -80,7 +80,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(this).inflate(R.menu.detail_menu, menu);
+       getMenuInflater().inflate(R.menu.detail_menu, menu);
         return true;
     }
 

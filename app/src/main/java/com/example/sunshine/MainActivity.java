@@ -2,6 +2,7 @@ package com.example.sunshine;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -47,16 +49,15 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     public static final int INDEX_WEATHER_DESCRIPTION = 3;
     public static final int INDEX_WEATHER_ICON= 4;
 
-
-    private static final int ID_FORECAST_LOADER = 44;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Objects.requireNonNull(getSupportActionBar()).setElevation(0f);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setElevation(0f);
+        }
         SunshinePreferences.setPreferredWeatherLocation(this, "Khartoum, Sudan");
-//        SunShineSyncUtils.initialize(this);
+        SunShineSyncUtils.initialize(this);
         View view = findViewById(R.id.separater_view);
         if (view != null) {
             mTowPane = true;
