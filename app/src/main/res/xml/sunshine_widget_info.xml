@@ -2,7 +2,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/sunshine_widget"
     android:initialLayout="@layout/today_widget_layout"
-    android:minWidth="240dp"
+    android:minWidth="600dp"
     android:minHeight="180dp"
     android:previewImage="@drawable/art_clear"
     android:resizeMode="horizontal|vertical"

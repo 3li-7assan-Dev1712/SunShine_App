@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="196dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white">
 
     <ImageView
         android:layout_width="96dp"
@@ -32,7 +33,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="22sp"
         tools:text="20"
         android:textStyle="bold"
         android:id="@+id/appwidget_min_temp"
@@ -43,7 +44,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="32sp"
+        android:textSize="26sp"
         tools:text="32"
         android:textColor="@android:color/black"
         android:textStyle="bold"
@@ -54,7 +55,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textColor="@android:color/black"
         tools:text="Partly cloudy"
         android:layout_toEndOf="@id/appwidget_image"
@@ -72,20 +73,21 @@
         android:layout_alignParentStart="true"
         android:layout_below="@id/appwidget_image"
         android:layout_marginStart="8dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:textSize="18sp"
-            tools:text="Humidity"
+            android:src="@drawable/humidity_widget_icon"
             android:layout_marginStart="8dp"
             android:id="@+id/appwidget_humidity_label"
-            />
+            android:contentDescription="@string/today"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             tools:text="86%"
+            android:layout_gravity="center_vertical"
             android:textColor="@android:color/black"
             android:layout_marginStart="8dp"
             android:textStyle="bold"
@@ -100,19 +102,19 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@id/appwidget_image"
         android:layout_marginEnd="8dp">
-        <TextView
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:textSize="18sp"
-            tools:text="Wind"
+            android:src="@drawable/wind_widget_icon"
             android:layout_marginStart="8dp"
+            android:contentDescription="@string/today"
             android:id="@+id/appwidget_wind_label" />
         <TextView
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:layout_gravity="center_vertical"
             tools:text="27 km/h N"
             android:layout_marginStart="8dp"
             android:textStyle="bold"
