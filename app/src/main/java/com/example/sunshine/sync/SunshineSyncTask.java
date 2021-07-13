@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
+import com.example.sunshine.utilities.JsonConstants;
 import com.example.sunshine.utilities.NetworkUtils;
 import com.example.sunshine.utilities.NotificationUtils;
 import com.example.sunshine.utilities.OpenWeatherJsonUtils;
@@ -39,7 +40,6 @@ public class SunshineSyncTask {
             /* Use the URL to retrieve the JSON */
             assert realWeatherRequestUrl != null;
             String reaJsonWeatherResponse = NetworkUtils.getResponseFromHttpUrl(realWeatherRequestUrl);
-
             /* Parse the JSON into a list of weather values */
             ContentValues[] realWeatherValues = OpenWeatherJsonUtils
                     .getRealWeatherData(reaJsonWeatherResponse, context);
@@ -65,7 +65,6 @@ public class SunshineSyncTask {
                         WeatherContract.WeatherEntry.CONTENT_URI,
                         realWeatherValues);
 
-//              COMPLETED (13) Check if notifications are enabled
                 /*
                  * Finally, after we insert data into the ContentProvider, determine whether or not
                  * we should notify the user that the weather has been refreshed.
@@ -79,10 +78,9 @@ public class SunshineSyncTask {
                  */
                 long timeSinceLastNotification = SunshinePreferences
                         .getEllapsedTimeSinceLastNotification(context);
-
+//
                 boolean oneDayPassedSinceLastNotification = true;
 
-//              COMPLETED (14) Check if a day has passed since the last notification
                 if (timeSinceLastNotification >= DateUtils.DAY_IN_MILLIS) {
                     oneDayPassedSinceLastNotification = true;
                 }
@@ -91,7 +89,7 @@ public class SunshineSyncTask {
                  * We only want to show the notification if the user wants them shown and we
                  * haven't shown a notification in the past day.
                  */
-//              COMPLETED (15) If more than a day have passed and notifications are enabled, notify the user
+
                 if (notificationsEnabled && oneDayPassedSinceLastNotification) {
                     Log.d("Any", "just wait and will show notification");
                     NotificationUtils.notifyUserOfNewWeather(context);

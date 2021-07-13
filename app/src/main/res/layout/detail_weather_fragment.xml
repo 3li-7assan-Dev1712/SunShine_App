@@ -4,23 +4,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:orientation="vertical"
+        style="@style/DetailLabel"
+        android:id="@+id/detail_fragment_linear_layout">
         <include
             android:id="@+id/primary_info"
             layout="@layout/primary_weather_info"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
 
         <include
             android:id="@+id/extra_details"
             layout="@layout/extra_weather_details"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
     </LinearLayout>
-
-
 </layout>
