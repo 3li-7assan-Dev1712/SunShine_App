@@ -66,7 +66,7 @@ public class SunshineSyncTask {
                         WeatherContract.WeatherEntry.CONTENT_URI,
                         realWeatherValues);
 
-                /*the data inside the database is updated for tow reasons:
+                /* the data inside the database is updated for tow reasons:
                 *  1- 3 hours went and the job schedule sync the data
                 *  2- the user change the location
                 *

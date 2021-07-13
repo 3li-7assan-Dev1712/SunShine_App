@@ -215,5 +215,6 @@
     <string name="humidityString">humidityString</string>
     <string name="windString">windString</string>
     <string name="location">location</string>
+    <string name="uri">uri</string>
 
 </resources>

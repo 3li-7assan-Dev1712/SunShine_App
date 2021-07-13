@@ -93,6 +93,7 @@ public class SunshineIntentService extends IntentService {
             weatherDataBundle.putString(getString(R.string.lowString), lowString);
             weatherDataBundle.putString(getString(R.string.humidityString), humidityString);
             weatherDataBundle.putString(getString(R.string.windString), windString);
+            weatherDataBundle.putParcelable(getString(R.string.uri), requestUri);
 
             AppWidgetManager manager = AppWidgetManager.getInstance(this);
             int[] widgetIds = manager.getAppWidgetIds(new ComponentName(this, SunshineWidget.class));

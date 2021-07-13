@@ -1,13 +1,19 @@
 package com.example.sunshine;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
 import androidx.annotation.MainThread;
 
+import com.example.sunshine.data.SunshinePreferences;
+import com.example.sunshine.data.WeatherContract;
+import com.example.sunshine.fragment.DetailWeatherFragment;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -76,6 +82,14 @@ public class SunshineWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.appwidget_min_temp, lowString);
         views.setTextViewText(R.id.appwidget_humidity, humidityString);
         views.setTextViewText(R.id.appwidget_wind_speed, windString);
+
+        /*creating the intent oo open the DetailActivity and set the request URI for it directly*/
+        Intent openDetailActivity = new Intent(context, DetailActivity.class);
+        Uri requestUri = bundle.getParcelable(context.getString(R.string.uri));
+        openDetailActivity.setData(requestUri);
+        /*creating the pending intent to use with widget to open the DetailActivity*/
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, PendingIntent.FLAG_UPDATE_CURRENT, openDetailActivity, 0);
+        views.setOnClickPendingIntent(R.id.appwidget_container, pendingIntent);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 }
