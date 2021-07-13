@@ -3,7 +3,6 @@
     package="com.example.sunshine">
 
     <uses-permission android:name="android.permission.INTERNET" />
-<!--<uses-permission android:name="com.example.udacity.droidtermsexample.TERMS_READ"/>-->
 
     <application
         android:allowBackup="true"
@@ -12,15 +11,27 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Forecast">
+        <receiver android:name=".SunshineWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/sunshine_widget_info" />
+        </receiver>
+
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".DetailActivity"
+        <activity
+            android:name=".DetailActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.Forecast">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Forecast">
             <intent-filter>
@@ -33,14 +44,17 @@
         <provider
             android:name=".data.WeatherProvider"
             android:authorities="@string/content_authority"
-            android:exported="false"/>
-        <service android:name=".sync.SunShineReminderFirebaseJobDispatcher"
+            android:exported="false" />
+
+        <service
+            android:name=".sync.SunShineReminderFirebaseJobDispatcher"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
-        <service android:name=".sync.SunshineSyncIntentService"
+        <service
+            android:name=".sync.SunshineSyncIntentService"
             android:exported="false" />
     </application>
 

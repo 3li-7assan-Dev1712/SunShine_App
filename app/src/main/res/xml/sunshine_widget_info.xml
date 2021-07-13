@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialKeyguardLayout="@layout/sunshine_widget"
+    android:initialLayout="@layout/today_widget_layout"
+    android:minWidth="240dp"
+    android:minHeight="180dp"
+    android:previewImage="@drawable/art_clear"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="10800000"
+    android:widgetCategory="home_screen" />

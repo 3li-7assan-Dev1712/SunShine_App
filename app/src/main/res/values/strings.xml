@@ -1,7 +1,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
 
-
     <!-- - - - - - - - - - - - - -
       - Used throughout Sunshine -
       - - - - - - - - - - - - - -->
@@ -79,7 +78,6 @@
     <string name="pref_last_notification">last_notification</string>
 
 
-
     <!-- - - - - - - - - - - - - - -
       - Used by SunshineDateUtils  -
       - - - - - - - - - - - - - - -->
@@ -94,7 +92,6 @@
     <string name="format_full_friendly_date">
         <xliff:g id="month">%1$s</xliff:g>, <xliff:g id="day">%2$s</xliff:g>
     </string>
-
 
 
     <!-- - - - - - - - - - - - - - - - -
@@ -123,7 +120,8 @@
     <!-- Pressure format -->
     <string name="format_pressure">
         <xliff:g id="pressure">%1.0f</xliff:g>
-    </string>hPa
+    </string>
+    hPa
 
     <string name="humidity_label">Humidity</string>
     <!-- Humidity format -->
@@ -192,7 +190,6 @@
     <string name="condition_unknown">Unknown (<xliff:g id="conditionId">%1$d</xliff:g>)</string>
 
 
-
     <!-- Used by NotificationUtils -->
 
     <!-- The format of the notification we show when the weather is updated -->
@@ -207,5 +204,7 @@
     <string name="do_it">do it yourself</string>
     <string name="main_notification_channel_name">notification_channel</string>
     <string name="light_rain">Light Rain</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>
