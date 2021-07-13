@@ -207,5 +207,13 @@
     <string name="key_date_millis">dateInMillis</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="dateText">dateText</string>
+    <string name="realDescription">realDescription</string>
+    <string name="icon">icon</string>
+    <string name="highString">highString</string>
+    <string name="lowString">lowString</string>
+    <string name="humidityString">humidityString</string>
+    <string name="windString">windString</string>
+    <string name="location">location</string>
 
 </resources>
