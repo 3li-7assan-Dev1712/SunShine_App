@@ -1,12 +1,16 @@
 package com.example.sunshine.fragment;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,7 +62,15 @@ public class DetailWeatherFragment extends Fragment implements LoaderManager.Loa
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View detailFragmentView = inflater.inflate(R.layout.detail_weather_fragment, container, false);
+        View detailFragmentView;
+        Display display =  ((WindowManager) getContext().getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int rot = display.getRotation();
+        if (rot == Surface.ROTATION_90 || rot == Surface.ROTATION_180) {
+            detailFragmentView = inflater.inflate(R.layout.weather_detail_fragment_land, container, false);
+        }else{
+            detailFragmentView = inflater.inflate(R.layout.detail_weather_fragment, container, false);
+        }
+
         if (savedInstanceState != null){
             mUri = savedInstanceState.getParcelable("uri");
         }
