@@ -6,6 +6,7 @@ import android.content.Context;
 import android.text.format.DateUtils;
 import android.util.Log;
 
+import com.example.sunshine.SunshineIntentService;
 import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
 import com.example.sunshine.utilities.JsonConstants;
@@ -64,6 +65,13 @@ public class SunshineSyncTask {
                 sunshineContentResolver.bulkInsert(
                         WeatherContract.WeatherEntry.CONTENT_URI,
                         realWeatherValues);
+
+                /*the data inside the database is updated for tow reasons:
+                *  1- 3 hours went and the job schedule sync the data
+                *  2- the user change the location
+                *
+                * so any time the data is updated I'll update the widget */
+                SunshineIntentService.startActionUpdateWeatherWidget(context);
 
                 /*
                  * Finally, after we insert data into the ContentProvider, determine whether or not
