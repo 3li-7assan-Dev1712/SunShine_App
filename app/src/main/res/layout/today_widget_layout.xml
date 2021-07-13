@@ -9,7 +9,7 @@
         android:id="@+id/appwidget_image"
         tools:src="@drawable/art_clear"
         android:layout_centerVertical="true"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:contentDescription="@string/today" />
     <TextView
         android:layout_width="wrap_content"
@@ -32,18 +32,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="32sp"
+        android:textSize="25sp"
         tools:text="20"
         android:textStyle="bold"
         android:id="@+id/appwidget_min_temp"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="8dp"
         android:layout_alignParentEnd="true"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="52sp"
+        android:textSize="32sp"
         tools:text="32"
         android:textColor="@android:color/black"
         android:textStyle="bold"
