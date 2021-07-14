@@ -2,7 +2,6 @@ package com.example.sunshine;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -18,8 +16,6 @@ import com.example.sunshine.data.SunshinePreferences;
 import com.example.sunshine.data.WeatherContract;
 import com.example.sunshine.fragment.DetailWeatherFragment;
 import com.example.sunshine.sync.SunShineSyncUtils;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler {
 
