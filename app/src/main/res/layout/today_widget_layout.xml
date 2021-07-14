@@ -32,28 +32,49 @@
         android:id="@+id/appwidget_date_text"
         android:layout_below="@id/appwidget_location_text"
         android:layout_centerHorizontal="true" />
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        tools:text="16"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:id="@+id/appwidget_min_temp"
+        android:layout_height="32dp"
+        android:orientation="horizontal"
+        android:id="@+id/temp_linear_layout"
         android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginEnd="4dp"
-        android:layout_marginStart="8dp"
-        android:layout_alignParentEnd="true"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        tools:text="32"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:id="@+id/appwidget_max_temp"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@id/appwidget_min_temp"/>
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/max_temp_icon"
+            android:contentDescription="@string/today"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            tools:text="32"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:id="@+id/appwidget_max_temp"
+            />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/min_temp_icon"
+            android:contentDescription="@string/today"
+            android:layout_marginTop="2dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            tools:text="16"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:id="@+id/appwidget_min_temp"
+             />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
